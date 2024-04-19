@@ -97,16 +97,17 @@ class Game {
     generateTable() {
         const table = [];
         const maxMoveLength = this.moves.reduce((max, move) => Math.max(max, move.length), 0);
-        const headerRow = ['v PC\\User >'].concat(this.moves.map(move => move.charAt(0).toUpperCase() + move.slice(1).padEnd(maxMoveLength)));
+        const headerRow = ['PC-Usr'].concat(this.moves.map(move => move.charAt(0).toUpperCase() + move.slice(1).padEnd(maxMoveLength)));
         table.push(headerRow.map(header => header.padEnd(maxMoveLength + 2)));
         for (let i = 0; i < this.moves.length; i++) {
             const row = [this.moves[i].charAt(0).toUpperCase() + this.moves[i].slice(1).padEnd(maxMoveLength)];
+            
             for (let j = 0; j < this.moves.length; j++) {
                 row.push(this.rules.determineWinner(this.moves[i], this.moves[j]).padEnd(maxMoveLength));
             }
             table.push(row);
         }
-        return table.map(row => '| ' + row.join(' | ') + ' |').join('\n');
+        return table.map(row =>'------------------------------------------\n' +'|' + row.join('|') ).join('\n');
     }
 }
 
@@ -119,4 +120,5 @@ if (moves.length < 3 || moves.length % 2 === 0 || new Set(moves).size < moves.le
 } else {
     const game = new Game(moves);
     game.play();
+    
 }
